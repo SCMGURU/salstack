@@ -1,0 +1,34 @@
+version: '3.0'
+
+services: 
+  salt-master:
+    build: 
+      context: .
+      dockerfile: Dockerfile.master
+    networks: 
+        - saltnet
+    
+  
+  salt-minion-1:
+    build: 
+      context: .
+      dockerfile: Dockerfile.minion
+    networks: 
+        - saltnet
+    depends_on: 
+      - salt-master
+
+  salt-minion-2:
+    build: 
+      context: .
+      dockerfile: Dockerfile.minion
+    networks: 
+        - saltnet
+    depends_on: 
+      - salt-master
+    
+networks:
+  saltnet:
+
+
+

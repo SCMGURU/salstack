@@ -1,0 +1,15 @@
+FROM centos:7
+
+LABEL author="nitin jain"
+LABEL linkedin_profile="https://www.linkedin.com/in/nitin-jain-avp-10580b6"
+
+
+RUN yum install -y nogpgcheck http://repo.saltstack.com/yum/redhat/salt-repo-latest.el7.noarch.rpm \
+&& yum update -y \
+&& yum install -y virt-what salt-master salt-api \
+&& yum clean all \
+&& rm -rf /var/cache/yum
+
+RUN sed -i "s|#auto_accept: False|#auto_accept: True|g" /etc/salt/master
+
+ENTRYPOINT [ "salt-master", "-l", "debug" ]
